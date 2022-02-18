@@ -8,13 +8,10 @@
 </head>
 <body>
 <h1>Привет</h1>
-<h2>${message}</h2>
 
-
-
-<a href="${pageContext.request.contextPath}/personList">Person List</a>
 <a href="/desk">Выбрать стол</a>
-
+<br>
+<a href="/managedesk">Добавить стол (только админ)</a>
 </body>
 
 </html>

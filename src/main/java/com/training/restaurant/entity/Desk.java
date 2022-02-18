@@ -12,7 +12,9 @@ public class Desk {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private int id;
 
-    private int number_desk;
+    private String description;
+
+    private int numberOfPlaces;
 
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "desk_id", fetch = FetchType.LAZY)
     private List<Orders> order;
@@ -28,12 +30,20 @@ public class Desk {
         this.id = id;
     }
 
-    public int getNumber_desk() {
-        return number_desk;
+    public String getDescription() {
+        return description;
     }
 
-    public void setNumber_desk(int number_desk) {
-        this.number_desk = number_desk;
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
+    public int getNumberOfPlaces() {
+        return numberOfPlaces;
+    }
+
+    public void setNumberOfPlaces(int numberOfPlaces) {
+        this.numberOfPlaces = numberOfPlaces;
     }
 
     public List<Orders> getOrder() {
