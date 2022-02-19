@@ -9,7 +9,7 @@ numberOfPlaces int
 create table rest.orders(
 id int auto_increment not null primary key,
 desk_id int not null,
-foreign key (desk_id) references desk (description)
+foreign key (desk_id) references desk (id)
 );
 
 create table rest.menu_type(
