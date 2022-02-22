@@ -4,15 +4,14 @@
 <!DOCTYPE HTML>
 <html>
 <head>
-    <title>Выбор стола</title>
+    <title>Редактирование типа</title>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 </head>
 <body>
-<form:form action="saveDesk" modelAttribute="desk">
+<form:form action="addType" modelAttribute="type">
     <form:hidden path="id"/>
-    Название: <form:input path="description"/>
+    Название: <form:input path="type"/>
     <br>
-    Мест посадки: <form:input path="places"/>
     <input type="submit" value="OK">
 </form:form>
 </body>

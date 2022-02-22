@@ -7,15 +7,16 @@ import java.util.List;
 @Table(name = "orders")
 public class Orders {
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
 
-    @ManyToOne(cascade = CascadeType.ALL)
+    @ManyToOne(cascade = {CascadeType.PERSIST, CascadeType.MERGE
+            , CascadeType.DETACH, CascadeType.REFRESH}, fetch = FetchType.EAGER)
     @JoinColumn(name = "desk_id")
     private Desk desk_id;
 
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "order_id", fetch = FetchType.LAZY)
-    private List<Order> orders;
+    private List<Receipt> orders;
 
     public Orders() {
     }
@@ -36,11 +37,11 @@ public class Orders {
         this.desk_id = desk_id;
     }
 
-    public List<Order> getOrders() {
+    public List<Receipt> getOrders() {
         return orders;
     }
 
-    public void setOrders(List<Order> orders) {
+    public void setOrders(List<Receipt> orders) {
         this.orders = orders;
     }
 }

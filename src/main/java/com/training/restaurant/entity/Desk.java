@@ -9,12 +9,12 @@ import java.util.List;
 @Table(name = "desk")
 public class Desk {
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
 
     private String description;
 
-    private int numberOfPlaces;
+    private int places;
 
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "desk_id", fetch = FetchType.LAZY)
     private List<Orders> order;
@@ -38,12 +38,12 @@ public class Desk {
         this.description = description;
     }
 
-    public int getNumberOfPlaces() {
-        return numberOfPlaces;
+    public int getPlaces() {
+        return places;
     }
 
-    public void setNumberOfPlaces(int numberOfPlaces) {
-        this.numberOfPlaces = numberOfPlaces;
+    public void setPlaces(int places) {
+        this.places = places;
     }
 
     public List<Orders> getOrder() {

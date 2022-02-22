@@ -8,12 +8,15 @@
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 </head>
 <body>
-<form:form action="newdesk" modelAttribute="newDesk" method="post">
+Добавить новый стол:
+<form:form action="saveDesk" modelAttribute="desk" method="post">
     Введите название стола:<form:input path="description"/>
-    Введите количество мест:<form:input path="numberOfPlaces"/>
+    Введите количество мест:<form:input path="places"/>
     <input type="submit" value="Добавить">
 </form:form>
-Список столов:
+Управление столами (ссылка)<br>
+<a href="editmenu">Изменить меню (ссылка)</a><br>
+<h3>Список столов:</h3>
 <table>
     <tr>
         <th>Название стола</th>
@@ -30,7 +33,7 @@
         </c:url>
         <tr>
             <td>${desk.getDescription()}</td>
-            <td>${desk.getNumberOfPlaces()}</td>
+            <td>${desk.getPlaces()}</td>
             <td><input type="button" value="Изменить" onclick="window.location.href='${update}'"></td>
             <td><input type="button" value="Удалить" onclick="window.location.href='${delete}'"></td>
         </tr>

@@ -7,14 +7,22 @@
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 </head>
 <body>
-<p>Выберите стол
-    <br>
-    Список столов:
+<table>
+    <tr>
+        <th>Название стола</th>
+        <th>Количество мест</th>
+        <th>Выбрать</th>
+    </tr>
     <c:forEach var="desk" items="${desks}">
-        <br>
-        <a>${desk.getDescription()}</a>
-        ${desk.getNumberOfPlaces()}
+        <c:url var="select" value="/selectDesk">
+            <c:param name="deskId" value="${desk.id}"></c:param>
+        </c:url>
+        <tr>
+            <td>${desk.getDescription()}</td>
+            <td>${desk.getPlaces()}</td>
+            <td><input type="button" value="Выбрать" onclick="window.location.href='${select}'"></td>
+        </tr>
     </c:forEach>
-</p>
+</table>
 </body>
 </html>

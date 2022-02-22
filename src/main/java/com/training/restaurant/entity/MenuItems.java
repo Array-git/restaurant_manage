@@ -7,19 +7,23 @@ import java.util.List;
 @Table(name = "menu_items")
 public class MenuItems {
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
 
     private String item;
 
     private int cost;
 
-    @ManyToOne(cascade = CascadeType.ALL)
+    @ManyToOne(cascade = {CascadeType.PERSIST, CascadeType.MERGE
+            , CascadeType.DETACH, CascadeType.REFRESH}, fetch = FetchType.EAGER)
     @JoinColumn(name="type_item")
     private MenuType type_item;
 
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "item_id", fetch = FetchType.LAZY)
-    private List<Order> orders;
+    private List<Receipt> orders;
+
+    @Transient
+    String selectType;
 
     public MenuItems() {
     }
@@ -56,11 +60,19 @@ public class MenuItems {
         this.type_item = type_item;
     }
 
-    public List<Order> getOrders() {
+    public List<Receipt> getOrders() {
         return orders;
     }
 
-    public void setOrders(List<Order> orders) {
+    public void setOrders(List<Receipt> orders) {
         this.orders = orders;
+    }
+
+    public String getSelectType() {
+        return selectType;
+    }
+
+    public void setSelectType(String selectType) {
+        this.selectType = selectType;
     }
 }

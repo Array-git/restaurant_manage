@@ -28,17 +28,19 @@ public class DeskController {
         return "desk";
     }
 
-    @RequestMapping("/managedesk")
+    @RequestMapping("/manage")
     public String addDesk(Model model){
-        model.addAttribute("newDesk",new Desk());
+        model.addAttribute("desk",new Desk());
         model.addAttribute("desks", deskRepository.findAll());
-        return "managedesk";
+        return "manage";
     }
 
-    @RequestMapping("/newdesk")
-    public String addDesks(@ModelAttribute("newdesk") Desk desk){
+    @RequestMapping("/saveDesk")
+    public String saveDesks(@ModelAttribute("desk") Desk desk){
+        System.out.println(desk.getPlaces());
+        System.out.println(desk.getDescription());
         deskRepository.save(desk);
-        return "redirect:managedesk";
+        return "redirect:manage";
     }
 
     @RequestMapping("/updateDesk")
@@ -49,9 +51,9 @@ public class DeskController {
     }
 
     @RequestMapping("/deleteDesk")
-    public String deleteDesk(@RequestParam("deskId") int id, Model model){
+    public String deleteDesk(@RequestParam("deskId") int id){
         Desk desk = deskRepository.findById(id).get();
         deskRepository.delete(desk);
-        return "redirect:managedesk";
+        return "redirect:manage";
     }
 }
