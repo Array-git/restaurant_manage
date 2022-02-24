@@ -19,9 +19,13 @@ public class Receipt {
     @JoinColumn(name = "order_id")
     private Orders order_id;
 
-
-
     public Receipt() {
+    }
+
+    public Receipt(MenuItems item_id, Orders order_id) {
+        this.count = 1;
+        this.item_id = item_id;
+        this.order_id = order_id;
     }
 
     public int getId() {

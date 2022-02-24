@@ -29,10 +29,10 @@
         <th>Удалить</th>
     </tr>
     <c:forEach var="type" items="${menuTypes}">
-        <c:url var="update" value="/updateType">
+        <%--<c:url var="update" value="/updateType">
             <c:param name="typeId" value="${type.id}"></c:param>
             <c:param name="typeName"></c:param>
-        </c:url>
+        </c:url>--%>
         <c:url var="delete" value="/deleteType">
             <c:param name="typeId" value="${type.id}"></c:param>
         </c:url>
