@@ -11,24 +11,12 @@ import java.util.List;
 
 
 @Controller
-//@RequestMapping(path = "/start")
+@RequestMapping(path = "/admin")
 public class DeskController {
     @Autowired
     private DeskRepository deskRepository;
 
-    @GetMapping("/")
-    public String getStart(){
-        return "start";
-    }
-
-    @RequestMapping("/desk")
-    public String getDesk(Model model){
-        //List<Desk> allDesk = (List<Desk>) deskRepository.findAll();
-        model.addAttribute("desks", deskRepository.findAll());
-        return "desk";
-    }
-
-    @RequestMapping("/manage")
+    @GetMapping("/manage")
     public String addDesk(Model model){
         model.addAttribute("desk",new Desk());
         model.addAttribute("desks", deskRepository.findAll());
