@@ -16,7 +16,7 @@
 <%--    <input type="submit" value="Добавить">--%>
 <%--</form:form>--%>
 <h2>Добавить позицию в меню:</h2>
-<form:form action="saveItem" modelAttribute="newItems" method="post">
+<form:form action="/admin/saveItem" modelAttribute="newItems" method="post">
     Введите название позиции:<form:input path="item"/>
     Введите стоимость позиции:<form:input path="cost"/>
     Выберите тип позиции:
@@ -39,10 +39,10 @@
         <th>Удалить</th>
     </tr>
     <c:forEach var="item" items="${menuItems}">
-        <c:url var="update" value="/updateItem">
+        <c:url var="update" value="/admin/updateItem">
             <c:param name="itemId" value="${item.id}"></c:param>
         </c:url>
-        <c:url var="delete" value="/deleteItem">
+        <c:url var="delete" value="/admin/deleteItem">
             <c:param name="itemId" value="${item.id}"></c:param>
         </c:url>
         <tr>

@@ -1,23 +1,20 @@
 package com.training.restaurant.Controller;
 
 import com.training.restaurant.Repository.DeskRepository;
-import com.training.restaurant.Repository.UserRepository;
-import com.training.restaurant.Service.Role;
+import com.training.restaurant.Service.UserService;
 import com.training.restaurant.entity.User;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
-import java.util.Collections;
-import java.util.Map;
-
 @Controller
 public class RegistrationController {
     @Autowired
-    private UserRepository userRepository;
+    private UserService userService;
     @Autowired
     private DeskRepository deskRepository;
 
@@ -28,15 +25,10 @@ public class RegistrationController {
 
     @PostMapping("/registration")
     public String addUser(User user, Model model){
-        User userFromDB = userRepository.findByUsername(user.getUsername());
-        if(userFromDB!=null){
+        if(!userService.adduser(user)){
             model.addAttribute("message", "Пользователь существует");
             return "registration";
         }
-        user.setActive(true);
-        //Админ пока создается в ручную
-        user.setRoles(Collections.singleton(Role.ADMIN));
-        userRepository.save(user);
         return "redirect:/login";
     }
 

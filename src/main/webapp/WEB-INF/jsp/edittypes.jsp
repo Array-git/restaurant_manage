@@ -33,11 +33,11 @@
             <c:param name="typeId" value="${type.id}"></c:param>
             <c:param name="typeName"></c:param>
         </c:url>--%>
-        <c:url var="delete" value="/deleteType">
+        <c:url var="delete" value="/admin/deleteType">
             <c:param name="typeId" value="${type.id}"></c:param>
         </c:url>
         <tr>
-            <form:form action="updateType" modelAttribute="testMenuType">
+            <form:form action="/admin/updateType" modelAttribute="testMenuType">
                 <form:hidden path="id"/>
             <td>
                 <input type="text" name="typeName" value="${type.getType()}">

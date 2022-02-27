@@ -19,9 +19,10 @@
     <br>
     <a href="/admin/manage">Добавить стол (только админ)</a>
 </security:authorize>
-<br>
-<a href="/user">Управление пользователями</a>
-
+<security:authorize access="hasRole('ADMIN')">
+    <br>
+<a href="/user">Управление пользователями (только админ)</a>
+</security:authorize>
 </body>
 
 </html>

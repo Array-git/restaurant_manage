@@ -9,7 +9,7 @@
 </head>
 <body>
 Добавить новый стол:
-<form:form action="saveDesk" modelAttribute="desk" method="post">
+<form:form action="/admin/saveDesk" modelAttribute="desk" method="post">
     Введите название стола:<form:input path="description"/>
     Введите количество мест:<form:input path="places"/>
     <input type="submit" value="Добавить">
@@ -25,10 +25,10 @@
         <th>Удалить</th>
     </tr>
     <c:forEach var="desk" items="${desks}">
-        <c:url var="update" value="/updateDesk">
+        <c:url var="update" value="/admin/updateDesk">
             <c:param name="deskId" value="${desk.id}"></c:param>
         </c:url>
-        <c:url var="delete" value="/deleteDesk">
+        <c:url var="delete" value="/admin/deleteDesk">
             <c:param name="deskId" value="${desk.id}"></c:param>
         </c:url>
         <tr>

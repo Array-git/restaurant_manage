@@ -22,7 +22,7 @@
                 ${role}
             </c:forEach>
         </th>
-        <th><a href="/user/${user.id}">edit</a></th>
+        <th><a href="/user/${user.id}">Изменить</a></th>
     </tr>
 </c:forEach>
 </table>

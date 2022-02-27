@@ -9,12 +9,16 @@
 <body>
 Редактирование пользователя
 <form:form modelAttribute="user" method="post" action="/user/update">
+    <c:url var="delete" value="/user/delete">
+        <c:param name="userDelId" value="${user.id}"></c:param>
+    </c:url>
     <input type="text" value="${user.username}" name="username">
     <c:forEach var="role" items="${roles}">
         <label><input type="checkbox" name="${role}">${role}</label>
     </c:forEach>
-    <input type="text" value="${user.id}" name="userId">
+    <input type="hidden" value="${user.id}" name="userId">
     <input type="submit" value="Сохранить"/>
+    <input type="button" value="Удалить" onclick="window.location.href='${delete}'">
 </form:form>
 </body>
 </html>

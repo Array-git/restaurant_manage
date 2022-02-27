@@ -18,6 +18,7 @@ import java.util.Set;
 import java.util.stream.Collectors;
 
 @Controller
+@RequestMapping(path = "/admin")
 public class MenuController {
     @Autowired
     private MenuRepository menuRepository;
