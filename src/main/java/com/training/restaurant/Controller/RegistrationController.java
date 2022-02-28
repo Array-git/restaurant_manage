@@ -34,10 +34,4 @@ public class RegistrationController {
 
     @GetMapping("/")
     public String getStart() {return "start";}
-
-    @RequestMapping("/desk")
-    public String getDesk(Model model){
-        model.addAttribute("desks", deskRepository.findAll());
-        return "desk";
-    }
 }

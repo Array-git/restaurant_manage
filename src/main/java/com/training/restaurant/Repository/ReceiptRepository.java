@@ -1,8 +1,11 @@
 package com.training.restaurant.Repository;
 
+import com.training.restaurant.entity.Orders;
 import com.training.restaurant.entity.Receipt;
 import org.springframework.data.repository.CrudRepository;
 
+import java.util.List;
+
 public interface ReceiptRepository extends CrudRepository<Receipt, Integer> {
-    //int[] find item_id by order id
+    List<Receipt> findReceiptsByOrder_id(int id);
 }

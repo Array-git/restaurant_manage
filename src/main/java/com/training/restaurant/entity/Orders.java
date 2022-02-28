@@ -15,7 +15,7 @@ public class Orders {
     @JoinColumn(name = "desk_id")
     private Desk desk_id;
 
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "order_id", fetch = FetchType.LAZY)
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "order", fetch = FetchType.LAZY)
     private List<Receipt> orders;
 
     public Orders() {

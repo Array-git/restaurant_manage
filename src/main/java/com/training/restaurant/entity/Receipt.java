@@ -17,7 +17,7 @@ public class Receipt {
 
     @ManyToOne(cascade = {CascadeType.DETACH, CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REFRESH})
     @JoinColumn(name = "order_id")
-    private Orders order_id;
+    private Orders order;
 
     public Receipt() {
     }
@@ -25,7 +25,7 @@ public class Receipt {
     public Receipt(MenuItems item_id, Orders order_id) {
         this.count = 1;
         this.item_id = item_id;
-        this.order_id = order_id;
+        this.order = order_id;
     }
 
     public int getId() {
@@ -52,11 +52,11 @@ public class Receipt {
         this.item_id = item_id;
     }
 
-    public Orders getOrder_id() {
-        return order_id;
+    public Orders getOrder() {
+        return order;
     }
 
-    public void setOrder_id(Orders order_id) {
-        this.order_id = order_id;
+    public void setOrder(Orders order) {
+        this.order = order;
     }
 }

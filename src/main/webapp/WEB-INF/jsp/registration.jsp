@@ -7,9 +7,9 @@
     <title>Spring Security Example </title>
 </head>
 <body>
-Регистрация
+<h3>Регистрация</h3>
 <c:set var="mess" value="message"></c:set>
-<c:if test="${not empty mess}">${message}<br/></c:if>
+<c:if test="${not empty mess}"><br/>${message}</c:if>
 <form:form action="registration" modelAttribute="user" method="post">
     <div><label> Логин : <input type="text" name="username"/> </label></div>
     <div><label> Пароль: <input type="password" name="password"/> </label></div>

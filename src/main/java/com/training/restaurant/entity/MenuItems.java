@@ -25,6 +25,9 @@ public class MenuItems {
     @Transient
     String selectType;
 
+    @Transient
+    int countInItems;
+
     public MenuItems() {
     }
 
@@ -74,5 +77,13 @@ public class MenuItems {
 
     public void setSelectType(String selectType) {
         this.selectType = selectType;
+    }
+
+    public int getCountInItems() {
+        return countInItems;
+    }
+
+    public void setCountInItems(int countInItems) {
+        this.countInItems = countInItems;
     }
 }
