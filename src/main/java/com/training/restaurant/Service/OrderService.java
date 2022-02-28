@@ -3,6 +3,7 @@ package com.training.restaurant.Service;
 import com.training.restaurant.Repository.*;
 import com.training.restaurant.entity.Desk;
 import com.training.restaurant.entity.Orders;
+import com.training.restaurant.entity.Receipt;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -34,5 +35,9 @@ public class OrderService {
 
     public void deleteOrderById(int orderId) {
         ordersRepository.deleteById(orderId);
+    }
+
+    public void deleteReceipt(int orderId, Receipt receipt) {
+
     }
 }
