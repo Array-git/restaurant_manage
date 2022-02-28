@@ -34,6 +34,8 @@ foreign key (item_id) references menu_items (id),
 foreign key (order_id) references orders (id)
 );<br>
 
+add create tables for user and roles
+
 <b>For create account administration run script in SQL:</b><br>
 insert into rest.usr (id, active, password, username) value (1, 1, 'password in bcrypt with rounds=8 ', 'admin');<br>
 insert into rest.user_role (user_id, roles) value (1, 'ROLE_ADMIN');
