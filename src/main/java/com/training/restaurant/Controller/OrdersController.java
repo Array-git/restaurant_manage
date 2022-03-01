@@ -2,6 +2,7 @@ package com.training.restaurant.Controller;
 
 import com.training.restaurant.Repository.*;
 import com.training.restaurant.Service.OrderService;
+import com.training.restaurant.Service.ReceiptService;
 import com.training.restaurant.entity.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.cassandra.CassandraProperties;
@@ -16,95 +17,81 @@ public class OrdersController {
     @Autowired
     private OrderService orderService;
     @Autowired
-    private MenuRepository menuRepository;
+    private ReceiptService receiptService;
     @Autowired
     private MenuTypeRepository menuTypeRepository;
     @Autowired
-    private ReceiptRepository receiptRepository;
+    private MenuRepository menuRepository;
 
     @RequestMapping("/desk")
     public String getDesk(Model model){
-        model.addAttribute("desks", orderService.findAll());
+        model.addAttribute("openOrders", orderService.findOpenOrders());
+        model.addAttribute("freeDesks", orderService.findFreeDesk());
         return "desk";
     }
 
-    @GetMapping("/selectDesk")
+    @GetMapping("/createOrder")
     public String createOrder(@RequestParam("deskId") int deskId, Model model){
-        Desk desk = orderService.findDeskById(deskId);
-        model.addAttribute("desk", desk);
+        model.addAttribute("desk", orderService.findDeskById(deskId));
         model.addAttribute("menuTypes", menuTypeRepository.findAll());
         return "createOrder";
     }
 
-/*    @RequestMapping("/deleteOrders")
-    public String deleteOrder(@ModelAttribute("orders") Orders orders, @RequestParam("ordersId") int id){
-        ordersRepository.deleteById(id);
-        return "redirect:desk";
-    }*/
-
-    @RequestMapping("/createOrder")
-    public String createOrder(Model model
-            , @RequestParam Map<String, String> form, @RequestParam("deskId") int deskId){
-        //Orders order = ordersRepository.findById(orderId).get();
-        System.out.println(deskId);
-        Orders orders = new Orders();
-        orders.setDesk_id(orderService.findDeskById(deskId));
-        orderService.save(orders);
-        System.out.println(orders.getId() +" - " + orders.getDesk_id().getId());
-        List<Receipt> receipts = new ArrayList<>();
-        form.remove("deskId");
-        form.remove("_csrf");
-        int count = 0;
-        for (Map.Entry entry: form.entrySet()){
-            int item_id = Integer.parseInt((String) (entry.getKey()));
-            try {
-                count = Integer.parseInt(entry.getValue().toString());
-            }
-            catch (Exception e){
-                System.out.println("Не удалось перевести в число");
-            }
-            if(count>0){
-                Receipt receipt = new Receipt();
-                receipt.setCount(count);
-                receipt.setOrder(orders);
-                receipt.setItem_id(menuRepository.findById(item_id).get());
-                receipts.add(receipt);
-                receiptRepository.save(receipt);
-            }
-        }
-        model.addAttribute("receipts", receipts);
+    @RequestMapping("/confirm")
+    public String createOrder(Model model, @RequestParam Map<String, String> form, @RequestParam("deskId") int deskId){
+        model.addAttribute("receipts", orderService.createOrder(form, deskId));
         return "confirm";
-    }
-
-    @RequestMapping("/confirmOrder")
-    public String confirmOrder(@ModelAttribute("testMenuType") Receipt receipts, @RequestParam("count") int count
-            ,@RequestParam("typeId") int typeId, @RequestParam("orderId") int orderId, @RequestParam("receiptId") int receiptId
-            , Model model){
-        System.out.println(count);
-        System.out.println(typeId);
-        System.out.println(orderId);
-        Receipt receipt = receiptRepository.findById(receiptId).get();
-        receipt.setCount(count);
-        receiptRepository.save(receipt);
-
-        model.addAttribute("orderId",orderId);
-        /*for(Receipt receipt : receipts){
-            String value = request.getParameter("" + receipt.getId());
-            //do some processing with value
-        }*/
-        return "redirect:createOrder";
     }
 
     @RequestMapping("/deletereceipt")
-    public String deleteReceipt(@RequestParam("receiptId") Receipt receipt, @RequestParam("order_id") int orderId, Model model){
-        orderService.deleteReceipt(orderId, receipt);
-        Orders orders = orderService.findOrderById(orderId);
-        receiptRepository.delete(receipt);
-        List<Receipt> receipts = receiptRepository.findReceiptsByOrder_id(orderId);
-        if(receipts.size()==0){
-            orderService.deleteOrderById(orderId);
+    public String deleteReceipt(@RequestParam("receiptId") Receipt receipt, Model model){
+        List<Receipt> receipts = orderService.deleteReceipt(receipt);
+        if(receipts.isEmpty()){
+            return "redirect:desk";
         }
         model.addAttribute("receipts", receipts);
+        model.addAttribute("newReceipt", new Receipt());
         return "confirm";
+    }
+
+    @PostMapping("/editOrder")
+    public String editOrder(@RequestParam int count, @RequestParam("receiptId") Receipt receipt, Model model){
+        receipt.setCount(count);
+        receiptService.save(receipt);
+        model.addAttribute("receipts", receiptService.findReceiptsByOrder_id(receipt.getOrder().getId()));
+        System.out.println(receipt.getId());
+        return "confirm";
+    }
+
+    @GetMapping("/listOrder")
+    public String listOrder(@RequestParam("orderId") Orders order, Model model){
+        model.addAttribute("order", order);
+        model.addAttribute("receipts", orderService.getReceipts(order));
+        return "listOrder";
+    }
+
+    @GetMapping("/closeOrder")
+    public String closeOrder(@RequestParam("orderId") Orders order){
+        orderService.closeOrder(order);
+        return "redirect:desk";
+    }
+
+    @GetMapping("/editOrder")
+    public String redirectForEditOrder(@RequestParam("orderId") Orders order, Model model){
+        model.addAttribute("receipts", receiptService.findReceiptsByOrder_id(order.getId()));
+        return "confirm";
+    }
+
+    @GetMapping("/addItemsInOrder")
+    public String addItemsInOrder(Model model, @RequestParam("orderId") Orders order){
+        model.addAttribute("orderId", order.getId());
+        model.addAttribute("menuTypes", menuTypeRepository.findAll());
+        return "additemsinorder";
+    }
+
+    @PostMapping("/addItems")
+    public String addItemsInOrder(Model model, @RequestParam Map<String, String> form, @RequestParam("orderId") Orders order){
+        receiptService.addItemsInOrder(form, order);
+        return "redirect:listOrder?orderId="+order.getId();
     }
 }

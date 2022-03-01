@@ -1,6 +1,7 @@
 package com.training.restaurant.entity;
 
 import javax.persistence.*;
+import java.util.Date;
 import java.util.List;
 
 @Entity
@@ -9,6 +10,12 @@ public class Orders {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
+
+    @Column(name="dataopen")
+    private Date dataOpen;
+
+    @Column(name="dataclose")
+    private Date dataClose;
 
     @ManyToOne(cascade = {CascadeType.PERSIST, CascadeType.MERGE
             , CascadeType.DETACH, CascadeType.REFRESH}, fetch = FetchType.EAGER)
@@ -43,5 +50,21 @@ public class Orders {
 
     public void setOrders(List<Receipt> orders) {
         this.orders = orders;
+    }
+
+    public Date getDataOpen() {
+        return dataOpen;
+    }
+
+    public void setDataOpen(Date dataOpen) {
+        this.dataOpen = dataOpen;
+    }
+
+    public Date getDataClose() {
+        return dataClose;
+    }
+
+    public void setDataClose(Date dataClose) {
+        this.dataClose = dataClose;
     }
 }

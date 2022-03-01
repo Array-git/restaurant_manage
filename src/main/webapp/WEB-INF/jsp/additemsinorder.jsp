@@ -8,14 +8,9 @@
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 </head>
 <body>
-<h2>Создаем заказ для ${desk.description}.</h2>
-<%--<c:url value="/deleteOrders" var="delete">
-<c:param name="ordersId" value="${orders.id}"></c:param>
-</c:url>
-<input type="submit" onclick="window.location.href='${delete}'" value="Удалить заказ"><br>--%>
-
-<h3>Добавьте в заказ позицию из меню:</h3>
-<form:form action="confirm" method="post" modelAttribute="newOrder">
+<h2>Добавляем позиции в заказ №${orderId}.</h2>
+<h3>Добавьте позицию из меню:</h3>
+<form:form action="addItems" method="post" modelAttribute="newOrder">
     <c:forEach var="type" items="${menuTypes}">
         <table>
         <c:if test="${not empty type.menuItems}">
@@ -24,16 +19,14 @@
                 <tr>
                     <td>${item.item}</td>
                     <td>${item.getCost()}р.</td>
-                        <%--            <td><input hidden name="orderId" value="${orders.id}"></td>--%>
                     <td><input type="number" name="${item.id}" value="0"></td>
-<%--                    <td><input type="checkbox" name="order${item.id}" value="${item.id}"></td>--%>
                 </tr>
             </c:forEach>
         </c:if>
     </c:forEach>
     <%--    <input hidden type="text" name="orderId" value="${orders.id}">--%>
-        <input type="hidden" name="deskId" value="${desk.id}">
-    <tr><input type="submit" value="Сделать заказ"></tr>
+    <input type="hidden" name="orderId" value="${orderId}">
+    <tr><input type="submit" value="Добавить в заказ"></tr>
     </table>
 </form:form>
 </body>

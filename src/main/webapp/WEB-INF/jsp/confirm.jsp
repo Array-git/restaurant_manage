@@ -8,26 +8,42 @@
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 </head>
 <body>
+Добавить панель по добавлению позиции в заказ
+<%--<form:form method="post" action="/addItemInOrder" modelAttribute="newItem">
+    <form:select path="selectType">
+        <form:option value="NONE" label="Выберите позицию"/>
+        <form:options  items="${allMenu}"/>
+    </form:select>
+    <input type="submit" value="Добавить">
+</form:form>--%>
+<%--<select name="item">
+    <c:forEach var="item" items="${allMenu}">
+        ${item.item}
+        <option value="${item.item}">${item.item}</option>
+    </c:forEach>
+&lt;%&ndash;    <input type="submit" value="Добавить">&ndash;%&gt;
+</select>--%>
 <table>
 <c:forEach var="receipt" items="${receipts}">
     <tr>
         <c:url var="delete" value="/deletereceipt">
             <c:param name="receiptId" value="${receipt.id}"></c:param>
-            <c:param name="order_id" value="${receipt.order.id}"></c:param>
         </c:url>
-        <form:form action="confirmOrder" modelAttribute="receipts">
+        <form:form action="editOrder" modelAttribute="receipts" method="post">
             <td>${receipt.item_id.item}</td>
-            <td><input type="text" name="count${receipt.item_id.id}" value="${receipt.count}"></td>
+            <td><input type="number" name="count" value="${receipt.count}"></td>
             <td><input hidden type="text" name="orderId" value="${receipt.order.id}"></td>
-            <td><input hidden type="text" name="typeId" value="${receipt.item_id.id}"></td>
             <td><input hidden type="text" name="receiptId" value="${receipt.id}"></td>
             <td>
-                <input type="button" value="Удалить" onclick="window.location.href='${delete}'">
+                <input type="submit" value="Обновить">
             </td>
         </form:form>
+        <td>
+            <input type="button" value="Удалить" onclick="window.location.href='${delete}'">
+        </td>
     </tr>
 </c:forEach>
-<tr><td><input type="submit" value="Подтвердить заказ"></td></tr>
+<tr><td><a href="desk">Подтвердить заказ</a></td></tr>
 </table>
 </body>
 </html>
