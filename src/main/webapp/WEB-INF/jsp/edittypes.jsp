@@ -18,6 +18,7 @@
 <h4>Добавить тип позиции:</h4>
 <form:form action="addType" modelAttribute="newType" method="post">
     <form:input path="type"></form:input>
+    <div><form:errors style="color: red;" id="error" path="type"/></div>
     <input type="submit" value="Добавить">
 </form:form>
 
@@ -37,7 +38,7 @@
             <c:param name="typeId" value="${type.id}"></c:param>
         </c:url>
         <tr>
-            <form:form action="/admin/updateType" modelAttribute="testMenuType">
+            <form:form action="/admin/updateType" modelAttribute="newType">
                 <form:hidden path="id"/>
             <td>
                 <input type="text" name="typeName" value="${type.getType()}">

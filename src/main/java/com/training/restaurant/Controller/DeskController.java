@@ -5,9 +5,13 @@ import com.training.restaurant.entity.Desk;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
-import java.util.List;
+import javax.validation.Valid;
 
 
 @Controller
@@ -24,18 +28,29 @@ public class DeskController {
     }
 
     @RequestMapping("/saveDesk")
-    public String saveDesks(@ModelAttribute("desk") Desk desk){
-        System.out.println(desk.getPlaces());
-        System.out.println(desk.getDescription());
+    public String saveDesks(@Valid @ModelAttribute("desk") Desk desk, BindingResult bindingResult, Model model){
+        if(bindingResult.hasErrors()){
+            model.addAttribute("desks", deskRepository.findAll());
+            return "manage";
+        }
         deskRepository.save(desk);
         return "redirect:manage";
     }
 
-    @RequestMapping("/updateDesk")
-    public String updateDesk(@RequestParam("deskId") int id, Model model){
-        Desk desk = deskRepository.findById(id).get();
-        model.addAttribute("desk", desk);
+    @RequestMapping("/editDesk")
+    public String editDesk(@RequestParam("deskId") int id, Model model){
+        model.addAttribute("desk", deskRepository.findById(id).get());
         return "editdesk";
+    }
+
+    @RequestMapping("/updateDesk")
+    public String updateDesk(@Valid @ModelAttribute("desk") Desk desk, BindingResult bindingResult, Model model){
+        if(bindingResult.hasErrors()){
+            model.addAttribute("desks", deskRepository.findAll());
+            return "editdesk";
+        }
+        deskRepository.save(desk);
+        return "redirect:manage";
     }
 
     @RequestMapping("/deleteDesk")

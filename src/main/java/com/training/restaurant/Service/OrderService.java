@@ -43,33 +43,14 @@ public class OrderService {
         return receipts;
     }
 
-    public List<Receipt> createOrder(Map<String, String> form, int deskId) {
+    public Orders createOrder(Map<String, String> form, int deskId) {
         Orders orders = new Orders();
         Desk desk = deskRepository.findById(deskId).get();
         orders.setDesk_id(desk);
         orders.setDataOpen(new Date());
         ordersRepository.save(orders);
         receiptService.addItemsInOrder(form, orders);
-        /*form.remove("deskId");
-        form.remove("_csrf");
-        for (Map.Entry entry: form.entrySet()){
-            int item_id = Integer.parseInt((String) (entry.getKey()));
-            try {
-                count = Integer.parseInt(entry.getValue().toString());
-            }
-            catch (Exception e){
-                System.out.println("Не удалось перевести в число");
-            }
-            if(count>0){
-                Receipt receipt = new Receipt();
-                receipt.setCount(count);
-                receipt.setOrder(orders);
-                receipt.setItem_id(menuService.findById(item_id));
-                receipts.add(receipt);
-                receiptService.save(receipt);
-            }
-        }*/
-        return receiptService.findReceiptsByOrder_id(orders.getId());
+        return orders;
     }
 
     public List<Orders> findOpenOrders() {

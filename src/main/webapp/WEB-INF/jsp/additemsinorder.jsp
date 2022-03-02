@@ -23,11 +23,12 @@
                 </tr>
             </c:forEach>
         </c:if>
+        </table>
     </c:forEach>
     <%--    <input hidden type="text" name="orderId" value="${orders.id}">--%>
     <input type="hidden" name="orderId" value="${orderId}">
     <tr><input type="submit" value="Добавить в заказ"></tr>
-    </table>
+
 </form:form>
 </body>
 </html>

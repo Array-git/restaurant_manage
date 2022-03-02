@@ -8,11 +8,13 @@
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 </head>
 <body>
-<form:form action="saveDesk" modelAttribute="desk">
+<form:form action="updateDesk" modelAttribute="desk">
     <form:hidden path="id"/>
     Название: <form:input path="description"/>
+    <div><form:errors style="color: red;" id="error" path="description"/></div>
     <br>
     Мест посадки: <form:input path="places"/>
+    <div><form:errors style="color: red;" id="error" path="places"/></div>
     <input type="submit" value="OK">
 </form:form>
 </body>

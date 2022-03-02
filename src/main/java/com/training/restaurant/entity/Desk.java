@@ -1,8 +1,12 @@
 package com.training.restaurant.entity;
 
-import org.aspectj.weaver.ast.Or;
+import com.training.restaurant.AnnotationValidation.CheckNumber;
+import org.hibernate.validator.constraints.Length;
 
 import javax.persistence.*;
+import javax.validation.constraints.Min;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.Pattern;
 import java.util.List;
 
 @Entity
@@ -12,9 +16,12 @@ public class Desk {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
 
+    @NotBlank(message = "Пожалуйста заполните поле")
+    @Length(max = 50, message = "Длина не более 50 символов")
     private String description;
 
-    private int places;
+    @Min(value=1, message = "Число не должно быть меньше 1")
+    private String places;
 
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "desk_id", fetch = FetchType.LAZY)
     private List<Orders> order;
@@ -38,11 +45,11 @@ public class Desk {
         this.description = description;
     }
 
-    public int getPlaces() {
+    public String getPlaces() {
         return places;
     }
 
-    public void setPlaces(int places) {
+    public void setPlaces(String places) {
         this.places = places;
     }
 

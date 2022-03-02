@@ -38,9 +38,9 @@ public class OrdersController {
     }
 
     @RequestMapping("/confirm")
-    public String createOrder(Model model, @RequestParam Map<String, String> form, @RequestParam("deskId") int deskId){
-        model.addAttribute("receipts", orderService.createOrder(form, deskId));
-        return "confirm";
+    public String createOrder(@RequestParam Map<String, String> form, @RequestParam("deskId") int deskId){
+        Orders order = orderService.createOrder(form, deskId);
+        return "redirect:listOrder?orderId="+order.getId();
     }
 
     @RequestMapping("/deletereceipt")
@@ -50,7 +50,6 @@ public class OrdersController {
             return "redirect:desk";
         }
         model.addAttribute("receipts", receipts);
-        model.addAttribute("newReceipt", new Receipt());
         return "confirm";
     }
 

@@ -31,11 +31,12 @@ public class ReceiptService {
     }
 
     public void addItemsInOrder(Map<String, String> form, Orders order) {
+        List<Receipt> oldReceipt = receiptRepository.findReceiptsByOrder_id(order.getId());
         int count = 0;
         form.remove("orderId");
+        form.remove("deskId");
         form.remove("_csrf");
         for (Map.Entry entry: form.entrySet()){
-            int item_id = Integer.parseInt((String) (entry.getKey()));
             try {
                 count = Integer.parseInt(entry.getValue().toString());
             }
@@ -43,11 +44,22 @@ public class ReceiptService {
                 System.out.println("Не удалось перевести в число");
             }
             if(count>0){
-                Receipt receipt = new Receipt();
-                receipt.setCount(count);
-                receipt.setOrder(order);
-                receipt.setItem_id(menuService.findById(item_id));
-                receiptRepository.save(receipt);
+                boolean isAdded = false;
+                int item_id = Integer.parseInt((String) (entry.getKey()));
+                for (Receipt receipt: oldReceipt) {
+                    if(receipt.getItem_id().getId()==item_id){
+                        receipt.setCount(receipt.getCount()+count);
+                        receiptRepository.save(receipt);
+                        isAdded=true;
+                    }
+                }
+                if(!isAdded) {
+                    Receipt newReceipt = new Receipt();
+                    newReceipt.setCount(count);
+                    newReceipt.setOrder(order);
+                    newReceipt.setItem_id(menuService.findById(item_id));
+                    receiptRepository.save(newReceipt);
+                }
             }
         }
     }

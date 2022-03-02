@@ -10,9 +10,14 @@
 <h3>Регистрация</h3>
 <c:set var="mess" value="message"></c:set>
 <c:if test="${not empty mess}"><br/>${message}</c:if>
+<c:set var="mess" value="passwordError"></c:set>
+<c:if test="${not empty mess}"><br/>${passwordError}</c:if>
 <form:form action="registration" modelAttribute="user" method="post">
     <div><label> Логин : <input type="text" name="username"/> </label></div>
+    <div><form:errors style="color: red;" id="error" path="username"/></div>
     <div><label> Пароль: <input type="password" name="password"/> </label></div>
+    <div><form:errors style="color: red;" id="error" path="password"/></div>
+    <div><label> Пароль: <input type="password" name="password2"/> </label></div>
     <div><input type="submit" value="Зарегистрироваться"/></div>
 </form:form>
 </body>

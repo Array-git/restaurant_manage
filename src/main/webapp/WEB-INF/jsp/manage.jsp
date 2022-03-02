@@ -8,13 +8,14 @@
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 </head>
 <body>
-Добавить новый стол:
+<h3>Добавить новый стол:</h3>
 <form:form action="/admin/saveDesk" modelAttribute="desk" method="post">
     Введите название стола:<form:input path="description"/>
+    <div><form:errors style="color: red;" id="error" path="description"/></div>
     Введите количество мест:<form:input path="places"/>
+    <div><form:errors style="color: red;" id="error" path="places"/></div>
     <input type="submit" value="Добавить">
 </form:form>
-Управление столами (ссылка)<br>
 <a href="editmenu">Изменить меню (ссылка)</a><br>
 <h3>Список столов:</h3>
 <table>
@@ -25,7 +26,7 @@
         <th>Удалить</th>
     </tr>
     <c:forEach var="desk" items="${desks}">
-        <c:url var="update" value="/admin/updateDesk">
+        <c:url var="edit" value="/admin/editDesk">
             <c:param name="deskId" value="${desk.id}"></c:param>
         </c:url>
         <c:url var="delete" value="/admin/deleteDesk">
@@ -34,7 +35,7 @@
         <tr>
             <td>${desk.getDescription()}</td>
             <td>${desk.getPlaces()}</td>
-            <td><input type="button" value="Изменить" onclick="window.location.href='${update}'"></td>
+            <td><input type="button" value="Изменить" onclick="window.location.href='${edit}'"></td>
             <td><input type="button" value="Удалить" onclick="window.location.href='${delete}'"></td>
         </tr>
     </c:forEach>

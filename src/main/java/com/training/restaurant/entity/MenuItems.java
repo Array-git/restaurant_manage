@@ -1,6 +1,8 @@
 package com.training.restaurant.entity;
 
 import javax.persistence.*;
+import javax.validation.constraints.Min;
+import javax.validation.constraints.NotBlank;
 import java.util.List;
 
 @Entity
@@ -10,8 +12,10 @@ public class MenuItems {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
 
+    @NotBlank(message = "Поле не должно быть пустым")
     private String item;
 
+    @Min(value=1, message = "Цена не должна быть меньше 1")
     private int cost;
 
     @ManyToOne(cascade = {CascadeType.PERSIST, CascadeType.MERGE
@@ -23,6 +27,7 @@ public class MenuItems {
     private List<Receipt> orders;
 
     @Transient
+    @NotBlank(message = "Пожалуйста выберите тип")
     String selectType;
 
     @Transient

@@ -8,24 +8,21 @@
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 </head>
 <body>
-<p>Текст ${insert}</p>
-<form:form action="saveItem" modelAttribute="menuItem">
+<h3>Изменение позиции меню</h3>
+<form:form action="updateItem" modelAttribute="menuItem">
     <form:hidden path="id"/>
     Название: <form:input path="item"/>
+    <div><form:errors style="color: red;" id="error" path="item"/></div>
     <br>
     Стоимость: <form:input path="cost"/>
+    <div><form:errors style="color: red;" id="error" path="cost"/></div>
     <br>
     Тип позиции:
     <form:select path="selectType">
-<%--        <c:choose>--%>
-<%--            <c:when test="${insert}">--%>
-
-<%--            </c:when>--%>
-<%--        </c:choose>--%>
         <form:option value="${insert}" label="${insert}"/>
         <form:options items="${types}"/>
     </form:select>
-
+<br/>
     <input type="submit" value="OK">
 </form:form>
 </body>

@@ -8,7 +8,8 @@
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 </head>
 <body>
-Добавить панель по добавлению позиции в заказ
+Для сохранения измененного количество, нажмите Обновить.
+<br/>Для удаления позиции - Удалить.
 <%--<form:form method="post" action="/addItemInOrder" modelAttribute="newItem">
     <form:select path="selectType">
         <form:option value="NONE" label="Выберите позицию"/>
@@ -25,6 +26,7 @@
 </select>--%>
 <table>
 <c:forEach var="receipt" items="${receipts}">
+    <c:set var="orderId" value="${receipt.order.id}"/>
     <tr>
         <c:url var="delete" value="/deletereceipt">
             <c:param name="receiptId" value="${receipt.id}"></c:param>
@@ -43,7 +45,7 @@
         </td>
     </tr>
 </c:forEach>
-<tr><td><a href="desk">Подтвердить заказ</a></td></tr>
+<tr><td><a href="listOrder?orderId=${orderId}">Подтвердить заказ</a></td></tr>
 </table>
 </body>
 </html>

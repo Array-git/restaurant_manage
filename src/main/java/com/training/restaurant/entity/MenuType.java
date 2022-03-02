@@ -1,6 +1,7 @@
 package com.training.restaurant.entity;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotBlank;
 import java.util.List;
 
 @Entity
@@ -10,6 +11,7 @@ public class MenuType {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
 
+    @NotBlank(message = "Пожалуйста заполните поле")
     private String type;
 
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "type_item", fetch = FetchType.LAZY)
