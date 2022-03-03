@@ -3,6 +3,7 @@ package com.training.restaurant.entity;
 import javax.persistence.*;
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
 import java.util.List;
 
 @Entity
@@ -27,7 +28,8 @@ public class MenuItems {
     private List<Receipt> orders;
 
     @Transient
-    @NotBlank(message = "Пожалуйста выберите тип")
+//    @org.hibernate.validator.constraints.NotBlank(message = "Не пустой")
+    @NotBlank(message = "Пожалуйста укажите тип")
     String selectType;
 
     @Transient

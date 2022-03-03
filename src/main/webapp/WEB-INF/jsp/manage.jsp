@@ -1,9 +1,17 @@
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="security" uri="http://www.springframework.org/security/tags" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <!DOCTYPE HTML>
 <html>
 <head>
+    <a href="/">Главная</a>
+    <a href="/desk">Выбор стола</a>
+    <security:authorize access="hasRole('ADMIN')">
+        <a href="/admin/manage">Столы</a>
+        <a href="/admin/editmenu">Меню</a>
+        <a href="/admin/edittypes">Типы</a>
+    </security:authorize>
     <title>Добавить стол</title>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 </head>

@@ -41,6 +41,7 @@ public class MenuController {
     public String saveItemWithType(@Valid @ModelAttribute("newItems") MenuItems menuItems, BindingResult bindingResult, Model model){
         if(bindingResult.hasErrors()){
             //отрефакторить дублирующий код сделав все в MenuService
+            model.addAttribute("newItems", menuItems);
             Set<MenuType> menu = menuTypeRepository.findDistinctByTypeIsNotNull();
             List<String> types = menu.stream().map(MenuType::getType).collect(Collectors.toList());
             model.addAttribute("types", types);
@@ -70,6 +71,7 @@ public class MenuController {
     public String updateItem(@Valid @ModelAttribute("menuItem") MenuItems menuItems, BindingResult bindingResult, Model model){
         if(bindingResult.hasErrors()){
             String selectedType = menuItems.getSelectType();
+
             Set<MenuType> menu = menuTypeRepository.findDistinctByTypeIsNotNull();
             List<String> types = menu.stream().map(MenuType::getType).collect(Collectors.toList());
             types.remove(selectedType);

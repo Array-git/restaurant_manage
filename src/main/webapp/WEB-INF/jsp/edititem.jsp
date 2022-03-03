@@ -21,6 +21,7 @@
     <form:select path="selectType">
         <form:option value="${insert}" label="${insert}"/>
         <form:options items="${types}"/>
+        <div><form:errors style="color: red;" id="error" path="selectType"/></div>
     </form:select>
 <br/>
     <input type="submit" value="OK">
