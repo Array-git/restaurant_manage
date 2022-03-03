@@ -2,6 +2,7 @@ package com.training.restaurant.Controller;
 
 import com.training.restaurant.Repository.MenuRepository;
 import com.training.restaurant.Repository.MenuTypeRepository;
+import com.training.restaurant.Service.MenuService;
 import com.training.restaurant.entity.MenuItems;
 import com.training.restaurant.entity.MenuType;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,43 +25,32 @@ public class MenuController {
     @Autowired
     private MenuRepository menuRepository;
     @Autowired
-    private MenuTypeRepository menuTypeRepository;
+    private MenuService menuService;
 
     @GetMapping("/editmenu")
     public String editMenu(Model model){
-        MenuItems menuItems = new MenuItems();
-        model.addAttribute("newItems", menuItems);
-        Set<MenuType> menu = menuTypeRepository.findDistinctByTypeIsNotNull();
-        List<String> types = menu.stream().map(MenuType::getType).collect(Collectors.toList());
-        model.addAttribute("types", types);
-        model.addAttribute("menuItems", menuRepository.findAll());
+        model.addAttribute("newItems", new MenuItems());
+        model.addAttribute("types", menuService.getListOfTypes());
+        model.addAttribute("menuItems", menuService.findAllMenuItems());
         return "editmenu";
     }
 
     @RequestMapping("/saveItem")
     public String saveItemWithType(@Valid @ModelAttribute("newItems") MenuItems menuItems, BindingResult bindingResult, Model model){
         if(bindingResult.hasErrors()){
-            //отрефакторить дублирующий код сделав все в MenuService
             model.addAttribute("newItems", menuItems);
-            Set<MenuType> menu = menuTypeRepository.findDistinctByTypeIsNotNull();
-            List<String> types = menu.stream().map(MenuType::getType).collect(Collectors.toList());
-            model.addAttribute("types", types);
-            model.addAttribute("menuItems", menuRepository.findAll());
+            model.addAttribute("types", menuService.getListOfTypes());
+            model.addAttribute("menuItems", menuService.findAllMenuItems());
             return "editmenu";
         }
-        MenuType menuType = menuTypeRepository.findMenuTypeByTypeIs(menuItems.getSelectType());
-        menuItems.setType_item(menuType);
-        menuRepository.save(menuItems);
+        menuService.saveItemsForSelectedType(menuItems.getSelectType(), menuItems);
         return "redirect:editmenu";
     }
 
     @RequestMapping("/editItem")
     public String editItem(@RequestParam("itemId") MenuItems menuItems, Model model){
-//        MenuItems menuItems = menuRepository.findById(id).get();
         String selectedType = menuItems.getType_item().getType();
-        Set<MenuType> menu = menuTypeRepository.findDistinctByTypeIsNotNull();
-        List<String> types = menu.stream().map(MenuType::getType).collect(Collectors.toList());
-        types.remove(selectedType);
+        List<String> types = menuService.getListOfTypes();
         model.addAttribute("insert", selectedType);
         model.addAttribute("types", types);
         model.addAttribute("menuItem", menuItems);
@@ -71,19 +61,12 @@ public class MenuController {
     public String updateItem(@Valid @ModelAttribute("menuItem") MenuItems menuItems, BindingResult bindingResult, Model model){
         if(bindingResult.hasErrors()){
             String selectedType = menuItems.getSelectType();
-
-            Set<MenuType> menu = menuTypeRepository.findDistinctByTypeIsNotNull();
-            List<String> types = menu.stream().map(MenuType::getType).collect(Collectors.toList());
-            types.remove(selectedType);
             model.addAttribute("insert", selectedType);
-            model.addAttribute("types", types);
+            model.addAttribute("types", menuService.getListOfTypes().remove(selectedType));
             model.addAttribute("menuItem", menuItems);
             return "edititem";
         }
-        //Проблема с сохранением
-        MenuType menuType = menuTypeRepository.findMenuTypeByTypeIs(menuItems.getSelectType());
-        menuItems.setType_item(menuType);
-        menuRepository.save(menuItems);
+        menuService.saveItemsForSelectedType(menuItems.getSelectType(), menuItems);
         return "redirect:editmenu";
     }
 
@@ -96,7 +79,7 @@ public class MenuController {
     @RequestMapping("/edittypes")
     public String editTypes(Model model){
         model.addAttribute("newType", new MenuType());
-        model.addAttribute("menuTypes", menuTypeRepository.findAll());
+        model.addAttribute("menuTypes", menuService.findAllMenuTypes());
 //        model.addAttribute("testMenuType", new MenuType());
         return "edittypes";
     }
@@ -105,26 +88,26 @@ public class MenuController {
     public String addType(@Valid @ModelAttribute("addType") MenuType menuType, BindingResult bindingResult, Model model){
         if(bindingResult.hasErrors()){
             model.addAttribute("newType", new MenuType());
-            model.addAttribute("menuTypes", menuTypeRepository.findAll());
+            model.addAttribute("menuTypes", menuService.findAllMenuItems());
             return "edittypes";
         }
-        menuTypeRepository.save(menuType);
+        menuService.saveMenuType(menuType);
         return "redirect:edittypes";
     }
 
     @RequestMapping("updateType")
     public String updateType(@ModelAttribute("testMenuType") MenuType plugType
             , @RequestParam("typeId") int id, @RequestParam("typeName") String typeName, Model model){
-        MenuType menuType = menuTypeRepository.findById(id).get();
+        MenuType menuType = menuService.findMenuTypeById(id);
         menuType.setType(typeName);
-        menuTypeRepository.save(menuType);
+        menuService.saveMenuType(menuType);
         model.addAttribute("type", menuType);
         return "redirect:edittypes";
     }
 
     @RequestMapping("/deleteType")
     public String deleteType(@RequestParam("typeId") int id){
-        menuTypeRepository.deleteById(id);
+        menuService.deleteTypeById(id);
         return "redirect:edittypes";
     }
 }

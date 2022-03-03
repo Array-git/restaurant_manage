@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.Map;
 
 @Controller
-@RequestMapping("/user")
+@RequestMapping("/admin/user")
 @PreAuthorize("hasRole('ADMIN')")
 public class UserController {
     @Autowired
@@ -34,12 +34,12 @@ public class UserController {
     @PostMapping("/update")
     public String userSave(@RequestParam("userId") User user, @RequestParam Map<String, String> form, @RequestParam String username){
         userService.saveUser(user, username, form);
-        return "redirect:/user";
+        return "redirect:/admin/user";
     }
 
     @RequestMapping("/delete")
     public String userDelete(@RequestParam("userDelId") int id){
         userService.deleteUser(id);
-        return "redirect:/user";
+        return "redirect:/admin/user";
     }
 }
