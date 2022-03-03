@@ -41,7 +41,7 @@
         <tr>
             <td>${desk.getDescription()}</td>
             <td>${desk.getPlaces()}</td>
-            <td><input type="button" value="Выбрать" onclick="window.location.href='${select}'"></td>
+            <td><input class="btn btn-primary mb-1" type="button" value="Выбрать" onclick="window.location.href='${select}'"></td>
         </tr>
     </c:forEach>
     </form:form>
@@ -61,7 +61,7 @@
             <tr>
                 <td>${openOrder.desk_id.description}</td>
                 <td>${openOrder.desk_id.places}</td>
-                <td><input type="button" value="Открыть заказ" onclick="window.location.href='${select}'"></td>
+                <td><input class="btn btn-primary mb-1" type="button" value="Открыть заказ" onclick="window.location.href='${select}'"></td>
             </tr>
         </c:forEach>
     </form:form>

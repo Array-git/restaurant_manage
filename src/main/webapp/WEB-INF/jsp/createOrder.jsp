@@ -50,7 +50,7 @@
     </c:forEach>
     <%--    <input hidden type="text" name="orderId" value="${orders.id}">--%>
         <input type="hidden" name="deskId" value="${desk.id}">
-    <tr><input type="submit" value="Сделать заказ"></tr>
+    <tr><input class="btn btn-primary mb-3" type="submit" value="Сделать заказ"></tr>
 </form:form>
 </div>
 </body>

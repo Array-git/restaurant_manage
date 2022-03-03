@@ -27,8 +27,8 @@
 <h2>Добавляем позиции в заказ №${orderId}.</h2>
 <h3>Добавьте позицию из меню:</h3>
 <form:form action="addItems" method="post" modelAttribute="newOrder">
+    <table>
     <c:forEach var="type" items="${menuTypes}">
-        <table>
         <c:if test="${not empty type.menuItems}">
             <tr><b>${type.type}</b></tr>
             <c:forEach items="${type.menuItems}" var="item">

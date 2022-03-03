@@ -51,6 +51,7 @@ public class MenuController {
     public String editItem(@RequestParam("itemId") MenuItems menuItems, Model model){
         String selectedType = menuItems.getType_item().getType();
         List<String> types = menuService.getListOfTypes();
+        types.remove(selectedType);
         model.addAttribute("insert", selectedType);
         model.addAttribute("types", types);
         model.addAttribute("menuItem", menuItems);
@@ -61,8 +62,10 @@ public class MenuController {
     public String updateItem(@Valid @ModelAttribute("menuItem") MenuItems menuItems, BindingResult bindingResult, Model model){
         if(bindingResult.hasErrors()){
             String selectedType = menuItems.getSelectType();
+            List<String> types = menuService.getListOfTypes();
+            types.remove(selectedType);
             model.addAttribute("insert", selectedType);
-            model.addAttribute("types", menuService.getListOfTypes().remove(selectedType));
+            model.addAttribute("types", types);
             model.addAttribute("menuItem", menuItems);
             return "edititem";
         }

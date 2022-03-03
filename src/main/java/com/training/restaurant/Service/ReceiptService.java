@@ -33,6 +33,7 @@ public class ReceiptService {
     public void addItemsInOrder(Map<String, String> form, Orders order) {
         List<Receipt> oldReceipt = receiptRepository.findReceiptsByOrder_id(order.getId());
         int count = 0;
+        form.remove("deskId");
         form.remove("orderId");
         form.remove("deskId");
         form.remove("_csrf");
