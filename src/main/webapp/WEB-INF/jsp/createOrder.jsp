@@ -41,7 +41,7 @@
                     <td>${item.item}</td>
                     <td>${item.getCost()}р.</td>
                         <%--            <td><input hidden name="orderId" value="${orders.id}"></td>--%>
-                    <td><input type="number" name="${item.id}" value="0"></td>
+                    <td><input type="number" min="0" name="${item.id}" value="0"></td>
 <%--                    <td><input type="checkbox" name="order${item.id}" value="${item.id}"></td>--%>
                 </tr>
             </c:forEach>

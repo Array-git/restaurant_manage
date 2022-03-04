@@ -49,7 +49,7 @@
         </c:url>
         <form:form action="editOrder" modelAttribute="receipts" method="post">
             <td>${receipt.item_id.item}</td>
-            <td><input type="number" name="count" value="${receipt.count}"></td>
+            <td><input type="number" min="1" name="count" value="${receipt.count}"></td>
             <td><input hidden type="text" name="orderId" value="${receipt.order.id}"></td>
             <td><input hidden type="text" name="receiptId" value="${receipt.id}"></td>
             <td>

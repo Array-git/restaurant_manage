@@ -58,7 +58,6 @@ public class OrdersController {
         receipt.setCount(count);
         receiptService.save(receipt);
         model.addAttribute("receipts", receiptService.findReceiptsByOrder_id(receipt.getOrder().getId()));
-        System.out.println(receipt.getId());
         return "confirm";
     }
 
