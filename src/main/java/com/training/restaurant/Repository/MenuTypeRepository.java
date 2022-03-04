@@ -7,5 +7,6 @@ import java.util.Set;
 
 public interface MenuTypeRepository extends CrudRepository<MenuType, Integer> {
     Set<MenuType> findDistinctByTypeIsNotNull();
+
     MenuType findMenuTypeByTypeIs(String type);
 }

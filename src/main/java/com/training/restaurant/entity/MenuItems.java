@@ -3,7 +3,6 @@ package com.training.restaurant.entity;
 import javax.persistence.*;
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.NotNull;
 import java.util.List;
 
 @Entity
@@ -16,12 +15,12 @@ public class MenuItems {
     @NotBlank(message = "Поле не должно быть пустым")
     private String item;
 
-    @Min(value=1, message = "Цена не должна быть меньше 1")
+    @Min(value = 1, message = "Цена не должна быть меньше 1")
     private int cost;
 
     @ManyToOne(cascade = {CascadeType.PERSIST, CascadeType.MERGE
             , CascadeType.DETACH, CascadeType.REFRESH}, fetch = FetchType.EAGER)
-    @JoinColumn(name="type_item")
+    @JoinColumn(name = "type_item")
     private MenuType type_item;
 
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "item_id", fetch = FetchType.LAZY)

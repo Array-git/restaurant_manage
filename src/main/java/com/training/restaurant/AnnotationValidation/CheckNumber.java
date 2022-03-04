@@ -12,6 +12,8 @@ import java.lang.annotation.Target;
 @Retention(RetentionPolicy.RUNTIME)
 public @interface CheckNumber {
     String message() default "Введите число";
+
     Class<?>[] groups() default {};
+
     Class<? extends Payload>[] payload() default {};
 }

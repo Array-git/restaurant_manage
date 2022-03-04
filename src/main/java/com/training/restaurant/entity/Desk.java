@@ -1,12 +1,10 @@
 package com.training.restaurant.entity;
 
-import com.training.restaurant.AnnotationValidation.CheckNumber;
 import org.hibernate.validator.constraints.Length;
 
 import javax.persistence.*;
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.Pattern;
 import java.util.List;
 
 @Entity
@@ -20,7 +18,7 @@ public class Desk {
     @Length(max = 50, message = "Длина не более 50 символов")
     private String description;
 
-    @Min(value=1, message = "Число не должно быть меньше 1")
+    @Min(value = 1, message = "Число не должно быть меньше 1")
     private String places;
 
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "desk_id", fetch = FetchType.LAZY)

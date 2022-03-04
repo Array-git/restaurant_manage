@@ -19,8 +19,6 @@ public class OrderService {
     @Autowired
     private DeskRepository deskRepository;
     @Autowired
-    private MenuService menuService;
-    @Autowired
     private ReceiptService receiptService;
 
 
@@ -37,7 +35,7 @@ public class OrderService {
         Orders orders = ordersRepository.findById(orderId).get();
         receiptService.delete(receipt);
         List<Receipt> receipts = receiptService.findReceiptsByOrder_id(orderId);
-        if(receipts.size()==0){
+        if (receipts.size() == 0) {
             ordersRepository.deleteById(orderId);
         }
         return receipts;
@@ -61,7 +59,7 @@ public class OrderService {
     public List<Desk> findFreeDesk() {
         List<Desk> desksWithOrders = new ArrayList<>();
         List<Desk> allDesk = (List<Desk>) deskRepository.findAll();
-        for (Orders order: ordersRepository.findOrdersByDataOpenNotNullAndDataCloseNull()) {
+        for (Orders order : ordersRepository.findOrdersByDataOpenNotNullAndDataCloseNull()) {
             desksWithOrders.add(order.getDesk_id());
         }
         allDesk.removeAll(desksWithOrders);

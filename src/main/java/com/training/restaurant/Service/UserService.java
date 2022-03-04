@@ -23,16 +23,16 @@ public class UserService implements UserDetailsService {
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
         User user = userRepository.findByUsername(username);
-        if(user==null){
+        if (user == null) {
             System.out.println("Пользователь с таким именем не зарегистрирован");
         }
         return user;
     }
 
-    public boolean adduser(User user){
+    public boolean adduser(User user) {
         User userFromDB = userRepository.findByUsername(user.getUsername());
 
-        if(userFromDB!=null){
+        if (userFromDB != null) {
             return false;
         }
         user.setActive(true);
@@ -51,7 +51,7 @@ public class UserService implements UserDetailsService {
         Set<String> roles = Arrays.stream(Role.values()).map(Role::name).collect(Collectors.toSet());
         user.getRoles().clear();
         for (String key : form.keySet()) {
-            if(roles.contains(key)){
+            if (roles.contains(key)) {
                 user.getRoles().add(Role.valueOf(key));
             }
         }

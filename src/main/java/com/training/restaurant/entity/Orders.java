@@ -11,10 +11,10 @@ public class Orders {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
 
-    @Column(name="dataopen")
+    @Column(name = "dataopen")
     private Date dataOpen;
 
-    @Column(name="dataclose")
+    @Column(name = "dataclose")
     private Date dataClose;
 
     @ManyToOne(cascade = {CascadeType.PERSIST, CascadeType.MERGE

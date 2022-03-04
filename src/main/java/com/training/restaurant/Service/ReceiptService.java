@@ -6,7 +6,6 @@ import com.training.restaurant.entity.Receipt;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -37,24 +36,23 @@ public class ReceiptService {
         form.remove("orderId");
         form.remove("deskId");
         form.remove("_csrf");
-        for (Map.Entry entry: form.entrySet()){
+        for (Map.Entry entry : form.entrySet()) {
             try {
                 count = Integer.parseInt(entry.getValue().toString());
-            }
-            catch (Exception e){
+            } catch (Exception e) {
                 System.out.println("Не удалось перевести в число");
             }
-            if(count>0){
+            if (count > 0) {
                 boolean isAdded = false;
                 int item_id = Integer.parseInt((String) (entry.getKey()));
-                for (Receipt receipt: oldReceipt) {
-                    if(receipt.getItem_id().getId()==item_id){
-                        receipt.setCount(receipt.getCount()+count);
+                for (Receipt receipt : oldReceipt) {
+                    if (receipt.getItem_id().getId() == item_id) {
+                        receipt.setCount(receipt.getCount() + count);
                         receiptRepository.save(receipt);
-                        isAdded=true;
+                        isAdded = true;
                     }
                 }
-                if(!isAdded) {
+                if (!isAdded) {
                     Receipt newReceipt = new Receipt();
                     newReceipt.setCount(count);
                     newReceipt.setOrder(order);

@@ -21,15 +21,15 @@ public class DeskController {
     private DeskRepository deskRepository;
 
     @GetMapping("/manage")
-    public String addDesk(Model model){
-        model.addAttribute("desk",new Desk());
+    public String addDesk(Model model) {
+        model.addAttribute("desk", new Desk());
         model.addAttribute("desks", deskRepository.findAll());
         return "manage";
     }
 
     @RequestMapping("/saveDesk")
-    public String saveDesks(@Valid @ModelAttribute("desk") Desk desk, BindingResult bindingResult, Model model){
-        if(bindingResult.hasErrors()){
+    public String saveDesks(@Valid @ModelAttribute("desk") Desk desk, BindingResult bindingResult, Model model) {
+        if (bindingResult.hasErrors()) {
             model.addAttribute("desks", deskRepository.findAll());
             return "manage";
         }
@@ -38,14 +38,14 @@ public class DeskController {
     }
 
     @RequestMapping("/editDesk")
-    public String editDesk(@RequestParam("deskId") int id, Model model){
+    public String editDesk(@RequestParam("deskId") int id, Model model) {
         model.addAttribute("desk", deskRepository.findById(id).get());
         return "editdesk";
     }
 
     @RequestMapping("/updateDesk")
-    public String updateDesk(@Valid @ModelAttribute("desk") Desk desk, BindingResult bindingResult, Model model){
-        if(bindingResult.hasErrors()){
+    public String updateDesk(@Valid @ModelAttribute("desk") Desk desk, BindingResult bindingResult, Model model) {
+        if (bindingResult.hasErrors()) {
             model.addAttribute("desks", deskRepository.findAll());
             return "editdesk";
         }
@@ -54,7 +54,7 @@ public class DeskController {
     }
 
     @RequestMapping("/deleteDesk")
-    public String deleteDesk(@RequestParam("deskId") int id){
+    public String deleteDesk(@RequestParam("deskId") int id) {
         Desk desk = deskRepository.findById(id).get();
         deskRepository.delete(desk);
         return "redirect:manage";

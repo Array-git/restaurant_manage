@@ -7,7 +7,7 @@ public class CheckNumberValidator implements ConstraintValidator<CheckNumber, St
 
     @Override
     public boolean isValid(String s, ConstraintValidatorContext constraintValidatorContext) {
-        return s!= null && s.matches("\\d") && s.length()>0;
+        return s != null && s.matches("\\d") && s.length() > 0;
     }
 
     @Override

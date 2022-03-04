@@ -19,26 +19,26 @@ public class UserController {
     private UserService userService;
 
     @GetMapping
-    public String userList(Model model){
+    public String userList(Model model) {
         model.addAttribute("users", userService.findAll());
         return "userlist";
     }
 
     @GetMapping("{user}")
-    public String userEditForm(@PathVariable User user, Model model){
+    public String userEditForm(@PathVariable User user, Model model) {
         model.addAttribute("user", user);
         model.addAttribute("roles", Role.values());
         return "useredit";
     }
 
     @PostMapping("/update")
-    public String userSave(@RequestParam("userId") User user, @RequestParam Map<String, String> form, @RequestParam String username){
+    public String userSave(@RequestParam("userId") User user, @RequestParam Map<String, String> form, @RequestParam String username) {
         userService.saveUser(user, username, form);
         return "redirect:/admin/user";
     }
 
     @RequestMapping("/delete")
-    public String userDelete(@RequestParam("userDelId") int id){
+    public String userDelete(@RequestParam("userDelId") int id) {
         userService.deleteUser(id);
         return "redirect:/admin/user";
     }
