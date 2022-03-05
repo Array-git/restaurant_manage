@@ -2,7 +2,12 @@
 # Simple restaurant managment
 My own project for learn Spring Framework (Boot, Data, Security), Hibernate, SQL. I wrote simple application for restaurant managment.<br> 
 DataBase fork on MySQL, used 7 tables with Bi-directional association, relation One-to-Many and Many-to-one. Frontend work with .jsp and bootstrap. Support login two roles user, admin.<br>
-Application features: CRUD operations with orders, tables, menus, types of dishes and account management.
+<b>Application features: </b><br>
+- CRUD operations with orders, tables, menus, types of dishes<br>
+- Account management<br>
+- Login/logout<br>
+- Fields Validation<br>
+- Display content by role<br>
 
 <b>SQL for create tables:</b><br>
 create table rest.desk(
